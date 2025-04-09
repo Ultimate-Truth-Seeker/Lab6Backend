@@ -83,6 +83,11 @@ Puedes importar esta colección en Postman para probar los endpoints de forma in
 
 📎 **[Enlace a la colección de Postman](https://uts-128837.postman.co/workspace/UTS's-Workspace~d006817e-8432-4670-8f83-411ceb1e9109/collection/43887446-40c2bec3-7c95-4cdb-ad23-fe95c63453c4?action=share&creator=43887446)**
 
+Postman cloud no puede ejecutar solicitudes hacia localhost por seguridad. Por lo tanto para probar las solicitudes hay dos opciones:
+
+1. Exportar las solicitudes y probarlas localmente desde Postman Desktop
+2. Exportar las solicitudes e importarlas en https://hoppscotch.io para probarlas
+
 ---
 
 ## 🖼 Captura de funcionamiento
