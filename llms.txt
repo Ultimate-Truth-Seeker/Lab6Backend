@@ -1,0 +1,58 @@
+Series Tracker API - Guía de uso
+=================================
+
+Esta API te permite gestionar tus series favoritas: agregarlas, verlas, modificarlas, votar por ellas, y más.
+
+Base URL:
+---------
+http://localhost:8000/api
+
+Endpoints:
+----------
+
+GET /series
+  - Lista todas las series
+  - Parámetros opcionales:
+      ?search=Palabra  -> Busca en los títulos
+      ?status=Watching -> Filtra por estado
+      ?sort=asc|desc   -> Ordena por ranking
+
+POST /series
+  - Crea una nueva serie
+  - Body JSON:
+    {
+      "title": "Naruto",
+      "status": "Watching",
+      "lastEpisodeWatched": 10,
+      "totalEpisodes": 220,
+      "ranking": 5
+    }
+
+GET /series/{id}
+  - Obtiene una serie por su ID
+
+PUT /series/{id}
+  - Reemplaza completamente una serie
+  - Body igual al POST
+
+DELETE /series/{id}
+  - Elimina una serie
+
+PATCH /series/{id}/status
+  - Actualiza solo el estado
+  - Body JSON: { "status": "Completed" }
+
+PATCH /series/{id}/episode
+  - Aumenta en 1 el episodio visto
+
+PATCH /series/{id}/upvote
+  - Aumenta el ranking en 1
+
+PATCH /series/{id}/downvote
+  - Disminuye el ranking en 1
+
+Tips:
+-----
+- Usa Postman o Insomnia para probar rápidamente los endpoints.
+- Puedes usar `curl` desde consola:
+  curl -X PATCH http://localhost:8000/api/series/1/upvote

@@ -1,0 +1,167 @@
+openapi: 3.0.3
+info:
+  title: Series Tracker API
+  description: API para gestionar una lista de series (crear, leer, actualizar, eliminar, votar, etc.)
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080/api
+
+paths:
+  /series:
+    get:
+      summary: Obtener todas las series
+      parameters:
+        - name: search
+          in: query
+          description: Buscar por título
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filtrar por estado (ej. "Watching", "Completed")
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: Ordenar por ranking (asc o desc)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista de series
+    post:
+      summary: Crear una nueva serie
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSeries'
+      responses:
+        '201':
+          description: ID de la serie creada
+
+  /series/{id}:
+    get:
+      summary: Obtener una serie por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Serie encontrada
+    put:
+      summary: Actualizar una serie existente
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSeries'
+      responses:
+        '200':
+          description: Serie actualizada
+    delete:
+      summary: Eliminar una serie
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Serie eliminada
+
+  /series/{id}/status:
+    patch:
+      summary: Actualizar el estado de una serie
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+      responses:
+        '200':
+          description: Estado actualizado
+
+  /series/{id}/episode:
+    patch:
+      summary: Incrementar el episodio actual
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Episodio incrementado
+
+  /series/{id}/upvote:
+    patch:
+      summary: Incrementar el ranking de la serie
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ranking incrementado
+
+  /series/{id}/downvote:
+    patch:
+      summary: Decrementar el ranking de la serie
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ranking decrementado
+
+components:
+  schemas:
+    CreateSeries:
+      type: object
+      required:
+        - title
+        - status
+        - lastEpisodeWatched
+        - totalEpisodes
+        - ranking
+      properties:
+        title:
+          type: string
+        status:
+          type: string
+        lastEpisodeWatched:
+          type: integer
+        totalEpisodes:
+          type: integer
+        ranking:
+          type: integer

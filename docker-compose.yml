@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  series-tracker:
+    build: .
+    container_name: series-tracker
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DATABASE_URL=sqlite://data/data.db
+      - FRONTEND_URL=http://localhost
